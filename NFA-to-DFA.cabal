@@ -125,4 +125,10 @@ test-suite NFA-to-DFA-test
     -- Test dependencies.
     build-depends:
         base ^>=4.17.2.1,
+        HUnit,
         NFA-to-DFA
+    
+    -- Other library packages from which modules are imported.
+    other-modules:
+        DFA.DFATests,
+        DFA.DFAValidationTests
