@@ -24,7 +24,7 @@ isValidDFA (DFA qs as trans q0 fs) =
     all (`elem` qs) fs &&
     all (\q -> all (\a -> case trans q a of
                             Just nextState -> nextState `elem` qs
-                            Nothing -> False) as) qs
+                            Nothing -> True) as) qs
 
 makeDFA :: Eq q => States q -> Alphabet a -> DFATransition q a -> q -> States q -> Maybe (DFA q a)
 makeDFA qs as trans q0 fs
