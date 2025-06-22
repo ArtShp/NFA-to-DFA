@@ -1,13 +1,14 @@
-{-# LANGUAGE DuplicateRecordFields #-}
-{-# OPTIONS_GHC -Wno-name-shadowing #-}
-
-module DFA where
+module DFA 
+    ( DFA, states, alphabet, transition, initialState, finalStates
+    , makeDFA
+    ) where
 
 import AutomataBase
 
 type DFATransition q a = q -> a -> Maybe q
 
-data (Show q, Show a) => DFA q a = DFA
+-- Assumed to be valid
+data DFA q a = DFA
     { states       :: States q
     , alphabet     :: Alphabet a
     , transition   :: DFATransition q a
@@ -15,26 +16,19 @@ data (Show q, Show a) => DFA q a = DFA
     , finalStates  :: States q
     }
 
-data (Show q, Show a) => ValidDFA q a = ValidDFA
-    { states       :: States q
-    , alphabet     :: Alphabet a
-    , transition   :: DFATransition q a
-    , initialState :: q
-    , finalStates  :: States q
-    }
+isValidDFA :: Eq q => DFA q a -> Bool
+isValidDFA (DFA qs as trans q0 fs) =
+    not (null qs) &&
+    not (null as) &&
+    q0 `elem` qs &&
+    all (`elem` qs) fs &&
+    all (\q -> all (\a -> case trans q a of
+                            Just nextState -> nextState `elem` qs
+                            Nothing -> False) as) qs
 
-validateDFA :: (Eq q, Show q, Show a) => DFA q a -> Maybe (ValidDFA q a)
-validateDFA dfa@(DFA states alphabet transition initialState finalStates) =
-    if isValidDFA dfa
-    then Just (ValidDFA states alphabet transition initialState finalStates)
-    else Nothing
-
-isValidDFA :: (Eq q, Show q, Show a) => DFA q a -> Bool
-isValidDFA (DFA states alphabet transition initialState finalStates) =
-    not (null states) &&
-    not (null alphabet) &&
-    initialState `elem` states &&
-    all (`elem` states) finalStates &&
-    all (\q -> all (\a -> case transition q a of
-                            Just nextState -> nextState `elem` states
-                            Nothing -> False) alphabet) states
+makeDFA :: Eq q => States q -> Alphabet a -> DFATransition q a -> q -> States q -> Maybe (DFA q a)
+makeDFA qs as trans q0 fs
+    | isValidDFA dfa = Just dfa
+    | otherwise      = Nothing
+        where
+            dfa = DFA qs as trans q0 fs
