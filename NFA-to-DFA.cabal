@@ -68,7 +68,9 @@ library
     -- other-extensions:
 
     -- Other library packages from which modules are imported.
-    build-depends:    base ^>=4.17.2.1
+    build-depends:
+        base ^>=4.17.2.1,
+        containers
 
     -- Directories containing source files.
     hs-source-dirs:   lib
@@ -126,6 +128,7 @@ test-suite NFA-to-DFA-test
     build-depends:
         base ^>=4.17.2.1,
         HUnit,
+        containers,
         NFA-to-DFA
     
     -- Other library packages from which modules are imported.
