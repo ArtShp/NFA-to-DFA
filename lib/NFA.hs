@@ -7,6 +7,7 @@ import qualified Data.Set as Set
 import qualified Data.Map as Map
 
 import AutomataBase
+import DFA
 
 -- We use `Nothing` here to represent an ε-move.
 type NFATransition q a = Map.Map (q, Maybe a) (States q) -- q -> Maybe a -> States q
@@ -49,3 +50,7 @@ epsilonClosure trans qs = closure qs Set.empty
                     next = Map.findWithDefault Set.empty (s, Nothing) trans
                     newStates = Set.difference next visited'
                 in closure (Set.union rest newStates) visited'
+
+move :: (Ord q, Ord a) => NFATransition q a -> States q -> a -> States q
+move trans qs symbol =
+    Set.unions [Map.findWithDefault Set.empty (s, Just symbol) trans | s <- Set.toList qs]
