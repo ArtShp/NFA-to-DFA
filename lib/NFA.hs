@@ -36,3 +36,16 @@ makeNFA :: (Ord q, Ord a) => States q -> Alphabet a -> NFATransition q a -> q ->
 makeNFA qs as trans q0 fs =
     let nfa = NFA qs as trans q0 fs
     in if isValidNFA nfa then Just nfa else Nothing
+
+epsilonClosure :: (Ord q, Ord a) => NFATransition q a -> States q -> States q
+epsilonClosure trans qs = closure qs Set.empty
+    where
+        closure toVisit visited
+            | Set.null toVisit = visited
+            | otherwise =
+                let s = Set.elemAt 0 toVisit
+                    rest = Set.deleteAt 0 toVisit
+                    visited' = Set.insert s visited
+                    next = Map.findWithDefault Set.empty (s, Nothing) trans
+                    newStates = Set.difference next visited'
+                in closure (Set.union rest newStates) visited'
