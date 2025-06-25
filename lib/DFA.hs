@@ -3,9 +3,12 @@ module DFA
     , makeDFA
     ) where
 
+import qualified Data.Set as Set
+import qualified Data.Map as Map
+
 import AutomataBase
 
-type DFATransition q a = q -> a -> Maybe q
+type DFATransition q a = Map.Map (q, a) q -- = q -> a -> Maybe q
 
 -- Assumed to be valid
 data DFA q a = DFA
@@ -16,19 +19,18 @@ data DFA q a = DFA
     , finalStates  :: States q
     }
 
-isValidDFA :: Eq q => DFA q a -> Bool
+isValidDFA :: (Ord q, Ord a) => DFA q a -> Bool
 isValidDFA (DFA qs as trans q0 fs) =
-    not (null qs) &&
-    not (null as) &&
-    q0 `elem` qs &&
-    all (`elem` qs) fs &&
-    all (\q -> all (\a -> case trans q a of
-                            Just nextState -> nextState `elem` qs
-                            Nothing -> True) as) qs
+    not (Set.null qs) &&
+    not (Set.null as) &&
+    q0 `Set.member` qs &&
+    fs `Set.isSubsetOf` qs &&
+    all (\(q, a) -> case Map.lookup (q, a) trans of
+            Just nextState -> nextState `Set.member` qs
+            Nothing        -> True)
+        [(q, a) | q <- Set.toList qs, a <- Set.toList as]
 
-makeDFA :: Eq q => States q -> Alphabet a -> DFATransition q a -> q -> States q -> Maybe (DFA q a)
-makeDFA qs as trans q0 fs
-    | isValidDFA dfa = Just dfa
-    | otherwise      = Nothing
-        where
-            dfa = DFA qs as trans q0 fs
+makeDFA :: (Ord q, Ord a) => States q -> Alphabet a -> DFATransition q a -> q -> States q -> Maybe (DFA q a)
+makeDFA qs as trans q0 fs =
+    let dfa = DFA qs as trans q0 fs
+    in if isValidDFA dfa then Just dfa else Nothing
