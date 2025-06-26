@@ -1,5 +1,5 @@
 module NFA 
-    ( NFA, states, alphabet, transition, initialState, finalStates
+    ( NFA(..)
     , makeNFA
     ) where
 

@@ -1,6 +1,7 @@
 module DFA 
-    ( DFA, states, alphabet, transition, initialState, finalStates
+    ( DFA(..)
     , makeDFA
+    , DFATransition
     ) where
 
 import qualified Data.Set as Set
