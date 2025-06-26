@@ -7,7 +7,7 @@ import qualified Data.Set as Set
 import qualified Data.Map as Map
 
 import AutomataBase
-import DFA
+import qualified DFA
 
 -- We use `Nothing` here to represent an ε-move.
 type NFATransition q a = Map.Map (q, Maybe a) (States q) -- q -> Maybe a -> States q
