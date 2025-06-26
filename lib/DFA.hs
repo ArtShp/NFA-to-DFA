@@ -18,7 +18,7 @@ data DFA q a = DFA
     , transition   :: DFATransition q a
     , initialState :: q
     , finalStates  :: States q
-    }
+    } deriving (Show, Eq)
 
 isValidDFA :: (Ord q, Ord a) => DFA q a -> Bool
 isValidDFA (DFA qs as trans q0 fs) =

@@ -19,7 +19,7 @@ data NFA q a = NFA
     , transition   :: NFATransition q a
     , initialState :: q
     , finalStates  :: States q
-    }
+    } deriving (Show, Eq)
 
 isValidNFA :: (Ord q, Ord a) => NFA q a -> Bool
 isValidNFA (NFA qs as trans q0 fs) =
