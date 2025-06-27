@@ -20,7 +20,7 @@ name:               NFA-to-DFA
 -- PVP summary:     +-+------- breaking API changes
 --                  | | +----- non-breaking API additions
 --                  | | | +--- code changes with no API change
-version:            0.0.0.0
+version:            0.1.0.0
 
 -- A short (one-line) description of the package.
 -- synopsis:
@@ -59,7 +59,7 @@ library
     import:           warnings
 
     -- Modules exported by the library.
-    exposed-modules:  MyLib
+    exposed-modules:  AutomataBase, DFA, NFA, Convertions.NFAConvertions, Convertions.DFAConvertions
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -68,7 +68,9 @@ library
     -- other-extensions:
 
     -- Other library packages from which modules are imported.
-    build-depends:    base ^>=4.17.2.1
+    build-depends:
+        base ^>=4.17.2.1,
+        containers
 
     -- Directories containing source files.
     hs-source-dirs:   lib
@@ -125,4 +127,11 @@ test-suite NFA-to-DFA-test
     -- Test dependencies.
     build-depends:
         base ^>=4.17.2.1,
+        HUnit,
+        containers,
         NFA-to-DFA
+    
+    -- Other library packages from which modules are imported.
+    other-modules:
+        DFA.DFATests,
+        DFA.DFAValidationTests
