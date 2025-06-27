@@ -135,4 +135,5 @@ test-suite NFA-to-DFA-test
     -- Other library packages from which modules are imported.
     other-modules:
         DFA.DFATests,
-        DFA.DFAValidationTests
+        DFA.DFAValidationTests,
+        DFA.DFASimulatorsTests
