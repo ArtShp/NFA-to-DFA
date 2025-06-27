@@ -4,6 +4,7 @@ import Test.HUnit
 
 import NFA.NFAValidationTests
 import NFA.NFASimulatorsTests
+import NFA.NFAConvertionsTests
 
 nfaTests :: [Test]
-nfaTests = nfaValidationTests ++ nfaSimulatorsTests
+nfaTests = nfaValidationTests ++ nfaSimulatorsTests ++ nfaConvertionsTests
