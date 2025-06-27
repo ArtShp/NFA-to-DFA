@@ -22,28 +22,32 @@ nfaSimulateFromState nfa q input =
             let next = nfaSimulateOneStep nfa current (Just a)
             in if Set.null next then Set.empty else go next as
 
-nfaSimulateFromStateWithHistory :: (Ord q, Ord a) => NFA q a -> q -> [a] -> ([[(q, Maybe a)]], States q)
-nfaSimulateFromStateWithHistory nfa q input =
-    let trans      = transition nfa
-        initStates = epsilonClosure trans (Set.singleton q)
-
-        initBranches = ([], q) : [([(s, Nothing)], s) | s <- Set.toList initStates, s /= q]
+nfaSimulateFromStateWithHistory :: (Ord q, Ord a) => NFA q a -> q -> [a] -> Set.Set ([(q, Maybe a)], States q)
+nfaSimulateFromStateWithHistory nfa start input =
+    let trans = transition nfa
+        initBranches =
+            ([], start)
+            : [([(start, Nothing)], s)
+                | s <- Set.toList (epsilonClosure trans (Set.singleton start))
+                , s /= start
+              ]
 
         step branches a =
-            [ (hist ++ [(s', Just a)], s')
+            [ (hist ++ [(s, Just a)], s')
             | (hist, s) <- branches, s' <- Set.toList (moveClosure trans s (Just a))
             ]
 
         finalBranches = foldl step initBranches input
 
-        histories    = [hist | (hist, _) <- finalBranches]
-        finalStates_ = Set.fromList [s | (_, s) <- finalBranches]
-    in (histories, finalStates_)
+    in Set.fromList
+        [ (hist, epsilonClosure trans (Set.singleton endState))
+        | (hist, endState) <- finalBranches, not (null hist)
+        ]
 
 nfaSimulateFromStart :: (Ord q, Ord a) => NFA q a -> [a] -> States q
 nfaSimulateFromStart nfa = nfaSimulateFromState nfa (initialState nfa)
 
-nfaSimulateFromStartWithHistory :: (Ord q, Ord a) => NFA q a -> [a] -> ([[(q, Maybe a)]], States q)
+nfaSimulateFromStartWithHistory :: (Ord q, Ord a) => NFA q a -> [a] -> Set.Set ([(q, Maybe a)], States q)
 nfaSimulateFromStartWithHistory nfa = nfaSimulateFromStateWithHistory nfa (initialState nfa)
 
 nfaIsAccepted :: (Ord q, Ord a) => NFA q a -> [a] -> Bool
