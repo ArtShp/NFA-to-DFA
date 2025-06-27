@@ -1,4 +1,4 @@
-module Convertions.NFAConvertions (nfaToDfa, moveClosure, epsilonClosure) where
+module Convertions.NFAConvertions where
 
 import qualified Data.Map as Map
 import qualified Data.Set as Set
