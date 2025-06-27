@@ -20,7 +20,7 @@ name:               NFA-to-DFA
 -- PVP summary:     +-+------- breaking API changes
 --                  | | +----- non-breaking API additions
 --                  | | | +--- code changes with no API change
-version:            0.1.0.0
+version:            0.2.0.0
 
 -- A short (one-line) description of the package.
 -- synopsis:
@@ -59,7 +59,8 @@ library
     import:           warnings
 
     -- Modules exported by the library.
-    exposed-modules:  AutomataBase, DFA, NFA, Convertions.NFAConvertions, Convertions.DFAConvertions
+    exposed-modules:  AutomataBase, DFA, NFA, Convertions.NFAConvertions, Convertions.DFAConvertions,
+                      Simulators.DFASimulators, Simulators.NFASimulators
 
     -- Modules included in this library but not exported.
     -- other-modules:
