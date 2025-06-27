@@ -9,3 +9,8 @@
 ## 0.2.0.0 -- 2025-06-27
 
 * Add DFA and NFA simulators
+
+## 0.3.0.0 -- 2025-06-27
+
+* Fix NFA simulators with history output
+* Add DFA and NFA unit tests, that cover simple cases
