@@ -63,7 +63,7 @@ nfaToDfa nfa = go Set.empty [initState] Map.empty
         fs = finalStates nfa
         initState = epsilonClosure trans (Set.singleton $ initialState nfa)
         
-        go visited [] delta = DFA.DFA visited as delta initState (Set.filter (not . Set.null . Set.intersection fs) visited)
+        go visited [] delta = deleteEmptyState $ DFA.DFA visited as delta initState (Set.filter (not . Set.null . Set.intersection fs) visited)
         go visited (q:queue) delta
             | q `Set.member` visited = go visited queue delta
             | otherwise =
@@ -74,3 +74,9 @@ nfaToDfa nfa = go Set.empty [initState] Map.empty
                             in (Map.insert (q, a) target d, if target `Set.member` visited' then ns else target:ns)
                         ) (delta, []) (Set.toList as)
                 in go visited' (queue ++ newStates) delta'
+
+deleteEmptyState :: (Ord q, Ord a) => DFA.DFA (States q) a -> DFA.DFA (States q) a
+deleteEmptyState dfa@DFA.DFA{DFA.states = qs, DFA.alphabet = sigma, DFA.transition = trans, DFA.initialState = q0, DFA.finalStates = fs}
+    | Set.empty `Set.notMember` qs = dfa
+    | otherwise = DFA.DFA (Set.delete Set.empty qs) sigma 
+                                         (Map.filterWithKey (\_ v -> not (Set.null v)) trans) q0 fs
