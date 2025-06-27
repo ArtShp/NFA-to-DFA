@@ -24,7 +24,7 @@ dfaSimulatorsTests =
 
 -- A simple 2-state toggle DFA: 'a' flips 0 and 1, 'b' is self-loop
 states_ :: States Int
-states_ = Set.fromList [0,1]
+states_ = Set.fromList [0, 1]
 
 alphabet_ :: Alphabet Char
 alphabet_ = Set.fromList "ab"
