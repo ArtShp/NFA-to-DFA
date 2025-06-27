@@ -6,7 +6,7 @@ import qualified Data.Map as Map
 import DFA
 
 dfaSimulateOneStep :: (Ord q, Ord a) => DFA q a -> q -> a -> Maybe q
-dfaSimulateOneStep dfa q1 a = Map.lookup (q1, a) (transition dfa)
+dfaSimulateOneStep dfa q a = Map.lookup (q, a) (transition dfa)
 
 dfaSimulateFromState :: (Ord q, Ord a) => DFA q a -> q -> [a] -> Maybe q
 dfaSimulateFromState dfa = go
