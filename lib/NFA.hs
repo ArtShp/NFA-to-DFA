@@ -1,6 +1,7 @@
 module NFA 
     ( NFA(..)
     , makeNFA
+    , nfaToDfa
     ) where
 
 import qualified Data.Set as Set
