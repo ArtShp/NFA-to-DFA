@@ -5,6 +5,8 @@ import qualified Data.Map as Map
 
 import Test.HUnit
 import Data.Maybe (isJust, isNothing)
+
+import AutomataBase
 import DFA
 
 dfaValidationTests :: [Test]
@@ -17,10 +19,10 @@ dfaValidationTests =
     ]
 
 -- Common pieces for tests:
-states_ :: Set.Set Int
+states_ :: States Int
 states_ = Set.fromList [0,1]
 
-alphabet_ :: Set.Set Char
+alphabet_ :: Alphabet Char
 alphabet_ = Set.fromList "ab"
 
 validTrans :: DFATransition Int Char
@@ -32,7 +34,7 @@ validTrans = Map.fromList
 initial :: Int
 initial = 0
 
-finals :: Set.Set Int
+finals :: States Int
 finals = Set.fromList [1]
 
 -- Tests:
