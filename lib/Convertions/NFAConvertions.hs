@@ -1,4 +1,4 @@
-module Convertions.NFAConvertions (nfaToDfa) where
+module Convertions.NFAConvertions (nfaToDfa, moveClosure, epsilonClosure) where
 
 import qualified Data.Map as Map
 import qualified Data.Set as Set
@@ -23,6 +23,11 @@ epsilonClosure trans qs = closure qs Set.empty
 move :: (Ord q, Ord a) => NFATransition q a -> States q -> a -> States q
 move trans qs symbol =
     Set.unions [Map.findWithDefault Set.empty (s, Just symbol) trans | s <- Set.toList qs]
+
+moveClosure :: (Ord q, Ord a) => NFATransition q a -> q -> Maybe a -> States q
+moveClosure trans q symbol = case symbol of
+    Just a  -> epsilonClosure trans (move trans (Set.singleton q) a)
+    Nothing -> epsilonClosure trans (Set.singleton q)
 
 nfaToDfa :: (Ord q, Ord a) => NFA q a -> DFA.DFA (States q) a
 nfaToDfa nfa = go Set.empty [initState] Map.empty
