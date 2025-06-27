@@ -138,4 +138,5 @@ test-suite NFA-to-DFA-test
         DFA.DFAValidationTests,
         DFA.DFASimulatorsTests,
         NFA.NFATests,
-        NFA.NFAValidationTests
+        NFA.NFAValidationTests,
+        NFA.NFASimulatorsTests
