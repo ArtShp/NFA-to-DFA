@@ -54,3 +54,23 @@ epsilonClosure trans qs = closure qs Set.empty
 move :: (Ord q, Ord a) => NFATransition q a -> States q -> a -> States q
 move trans qs symbol =
     Set.unions [Map.findWithDefault Set.empty (s, Just symbol) trans | s <- Set.toList qs]
+
+nfaToDfa :: (Ord q, Ord a) => NFA q a -> DFA.DFA (States q) a
+nfaToDfa nfa = go Set.empty [initState] Map.empty
+    where
+        trans = transition nfa
+        as = alphabet nfa
+        fs = finalStates nfa
+        initState = epsilonClosure trans (Set.singleton $ initialState nfa)
+        
+        go visited [] delta = DFA.DFA visited as delta initState (Set.filter (not . Set.null . Set.intersection fs) visited)
+        go visited (q:queue) delta
+            | q `Set.member` visited = go visited queue delta
+            | otherwise =
+                let visited' = Set.insert q visited
+                    (delta', newStates) = foldl
+                        (\(d, ns) a ->
+                            let target = epsilonClosure trans (move trans q a)
+                            in (Map.insert (q, a) target d, if target `Set.member` visited' then ns else target:ns)
+                        ) (delta, []) (Set.toList as)
+                in go visited' (queue ++ newStates) delta'
