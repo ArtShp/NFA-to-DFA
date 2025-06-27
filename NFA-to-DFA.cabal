@@ -136,4 +136,5 @@ test-suite NFA-to-DFA-test
     other-modules:
         DFA.DFATests,
         DFA.DFAValidationTests,
-        DFA.DFASimulatorsTests
+        DFA.DFASimulatorsTests,
+        NFA.NFATests

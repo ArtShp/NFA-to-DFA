@@ -4,9 +4,10 @@ import Test.HUnit
 import qualified System.Exit as Exit
 
 import DFA.DFATests as DFATests
+import NFA.NFATests as NFATests
 
 tests :: Test
-tests = TestList (dfaTests)
+tests = TestList (dfaTests ++ nfaTests)
 
 main :: IO ()
 main = do
