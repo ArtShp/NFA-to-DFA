@@ -7,6 +7,15 @@ import Test.HUnit
 import Data.Maybe (isJust, isNothing)
 import DFA
 
+dfaValidationTests :: [Test]
+dfaValidationTests =
+    [ TestLabel "valid simple DFA"           testValidDFA
+    , TestLabel "empty states"               testEmptyStates
+    , TestLabel "empty alphabet"             testEmptyAlphabet
+    , TestLabel "initial not in states"      testInitialNotInStates
+    , TestLabel "final not subset of states" testFinalNotSubset
+    ]
+
 -- Common pieces for tests:
 states_ :: Set.Set Int
 states_ = Set.fromList [0,1]
@@ -26,14 +35,7 @@ initial = 0
 finals :: Set.Set Int
 finals = Set.fromList [1]
 
-dfaValidationTests :: [Test]
-dfaValidationTests =
-    [ TestLabel "valid simple DFA"           testValidDFA
-    , TestLabel "empty states"               testEmptyStates
-    , TestLabel "empty alphabet"             testEmptyAlphabet
-    , TestLabel "initial not in states"      testInitialNotInStates
-    , TestLabel "final not subset of states" testFinalNotSubset
-    ]
+-- Tests:
 
 testValidDFA :: Test
 testValidDFA = TestCase $
