@@ -1,6 +1,7 @@
 module NFA 
     ( NFA(..)
     , makeNFA
+    , NFATransition
     ) where
 
 import qualified Data.Set as Set
