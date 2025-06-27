@@ -1,4 +1,4 @@
-module Convertions.DFAConvertions (dfaToNfa) where
+module Convertions.DFAConvertions where
 
 import qualified Data.Map as Map
 import qualified Data.Set as Set
