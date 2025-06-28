@@ -63,7 +63,7 @@ library
                       Simulators.DFASimulators, Simulators.NFASimulators, TestData.TestData
 
     -- Modules included in this library but not exported.
-    other-modules: TestData.NFA_1, TestData.NFA_2
+    other-modules: TestData.NFA_1, TestData.NFA_2, TestData.DFA_1
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
