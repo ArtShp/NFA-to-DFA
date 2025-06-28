@@ -38,6 +38,10 @@ main = do
         putStrLn $ "Input: \"" ++ w ++ "\"  =>  " ++
                    (if nfaIsAccepted TD.nfa_1 w then "accepted" else "rejected")
 
+
+
+
+
     putStrLn "\n=== Complex NFA to DFA Conversion and Simulation ===\n"
 
     putStrLn "Defined NFA:"
@@ -54,17 +58,20 @@ main = do
     print dfa_2
 
     -- Try a few input strings on the DFA
-    let inputsComplex = ["12.34", "-1.", "+.555", ".", "13249", "--12.12"]
     putStrLn "\n-- Testing DFA acceptance --"
-    forM_ inputsComplex $ \w -> do
+    forM_ TD.nfaInputs_2 $ \w -> do
         putStrLn $ "Input: \"" ++ w ++ "\"  =>  " ++
                    (if dfaIsAccepted dfa_2 w then "accepted" else "rejected")
 
     -- And also check NFA acceptance
     putStrLn "\n-- Testing NFA acceptance --"
-    forM_ inputsComplex $ \w -> do
+    forM_ TD.nfaInputs_2 $ \w -> do
         putStrLn $ "Input: \"" ++ w ++ "\"  =>  " ++
                    (if nfaIsAccepted TD.nfa_2 w then "accepted" else "rejected")
+
+
+
+
 
     putStrLn "\n=== Simulating NFA and DFA with History ===\n"
 
