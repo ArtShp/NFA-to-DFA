@@ -12,21 +12,21 @@ import qualified Data.Map as Map
 import qualified Data.Set as Set
 
 import AutomataBase
-import qualified DFA
-import qualified NFA
+import DFA
+import NFA
 
 -- ==================== BEGIN - NFA 2 ====================
 
-nfa_2 :: NFA.NFA Int Char
-nfa_2 = NFA.NFA
-    { NFA.states       = Set.fromList [0 .. 5]
-    , NFA.alphabet     = Set.fromList "0123456789+-."
-    , NFA.transition   = nfaTrans_2
-    , NFA.initialState = 0
-    , NFA.finalStates  = Set.singleton 5
+nfa_2 :: NFA Int Char
+nfa_2 = NFA
+    { nfaStates       = Set.fromList [0 .. 5]
+    , nfaAlphabet     = Set.fromList "0123456789+-."
+    , nfaTransition   = nfaTrans_2
+    , nfaInitialState = 0
+    , nfaFinalStates  = Set.singleton 5
     }
 
-nfaTrans_2 :: NFA.NFATransition Int Char
+nfaTrans_2 :: NFATransition Int Char
 nfaTrans_2 = Map.fromList (
     [ ((0, Just '+'), Set.singleton 1)
     , ((0, Just '-'), Set.singleton 1)
@@ -59,16 +59,16 @@ nfaOutputs_2 = snd $ unzip nfaIO_2
 
 
 
-dfaExpected_2 :: DFA.DFA (States Int) Char
-dfaExpected_2 = DFA.DFA
-    { DFA.states       = Set.fromList [Set.fromList [0,1], Set.fromList [1], Set.fromList [1,4], Set.fromList [2], Set.fromList [2,3,5], Set.fromList [3,5]]
-    , DFA.alphabet     = Set.fromList "0123456789+-."
-    , DFA.transition   = dfaExpectedTrans_2
-    , DFA.initialState = Set.fromList [0,1]
-    , DFA.finalStates  = Set.fromList [Set.fromList [2,3,5], Set.fromList [3,5]]
+dfaExpected_2 :: DFA (States Int) Char
+dfaExpected_2 = DFA
+    { dfaStates       = Set.fromList [Set.fromList [0,1], Set.fromList [1], Set.fromList [1,4], Set.fromList [2], Set.fromList [2,3,5], Set.fromList [3,5]]
+    , dfaAlphabet     = Set.fromList "0123456789+-."
+    , dfaTransition   = dfaExpectedTrans_2
+    , dfaInitialState = Set.fromList [0,1]
+    , dfaFinalStates  = Set.fromList [Set.fromList [2,3,5], Set.fromList [3,5]]
     }
 
-dfaExpectedTrans_2 :: DFA.DFATransition (States Int) Char
+dfaExpectedTrans_2 :: DFATransition (States Int) Char
 dfaExpectedTrans_2 = Map.fromList $ concat
     [ trans1 [0,1] [1,4] "0123456789"
     , trans1 [0,1] [1] "+-"

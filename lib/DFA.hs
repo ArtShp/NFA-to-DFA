@@ -13,15 +13,15 @@ type DFATransition q a = Map.Map (q, a) q -- = q -> a -> Maybe q
 
 -- Assumed to be valid
 data DFA q a = DFA
-    { states       :: States q
-    , alphabet     :: Alphabet a
-    , transition   :: DFATransition q a
-    , initialState :: q
-    , finalStates  :: States q
+    { dfaStates       :: States q
+    , dfaAlphabet     :: Alphabet a
+    , dfaTransition   :: DFATransition q a
+    , dfaInitialState :: q
+    , dfaFinalStates  :: States q
     } deriving (Eq)
 
 instance (Ord q, Ord a, Show q, Show a) => Show (DFA q a) where
-    show DFA{states = qs, alphabet = as, transition = trans, initialState = q0, finalStates = fs} =
+    show DFA{dfaStates = qs, dfaAlphabet = as, dfaTransition = trans, dfaInitialState = q0, dfaFinalStates = fs} =
         "DFA { " ++ "\n" ++
         "    states = " ++ showStates qs ++ "\n" ++
         "    alphabet = " ++ showAlphabet as ++ "\n" ++

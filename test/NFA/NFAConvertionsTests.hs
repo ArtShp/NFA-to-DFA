@@ -4,10 +4,7 @@ import qualified Data.Set as Set
 import qualified Data.Map as Map
 import Test.HUnit
 
-import AutomataBase
-import NFA
-import qualified DFA
-import Convertions.NFAConvertions
+import Automata
 
 nfaConvertionsTests :: [Test]
 nfaConvertionsTests =
@@ -64,14 +61,14 @@ transSimple = Map.singleton (0, Just 'a') (Set.singleton 1)
 nfaSimple :: NFA Int Char
 nfaSimple = NFA (Set.fromList [0, 1]) (Set.singleton 'a') transSimple 0 (Set.singleton 1)
 
-expectedDfaSimple :: DFA.DFA (States Int) Char
+expectedDfaSimple :: DFA (States Int) Char
 expectedDfaSimple =
     let s0 = Set.singleton 0
         s1 = Set.singleton 1
         sigma = Set.singleton 'a'
         delta = Map.fromList [((s0, 'a'), s1)]
         finals = Set.singleton s1
-    in DFA.DFA (Set.fromList [s0, s1]) sigma delta s0 finals
+    in DFA (Set.fromList [s0, s1]) sigma delta s0 finals
 
 testNfaToDfaSimple :: Test
 testNfaToDfaSimple = TestCase $
@@ -97,6 +94,6 @@ testNfaToDfaWithEps = TestCase $
         expectedSigma  = Set.singleton 'a'
         expectedDelta  = Map.fromList [((s01, 'a'), s2)]
         expectedFinals = Set.singleton s2
-        expectedDfa = DFA.DFA expectedStates expectedSigma expectedDelta s01 expectedFinals
+        expectedDfa = DFA expectedStates expectedSigma expectedDelta s01 expectedFinals
     in do
         assertEqual "convert mix NFA to DFA" expectedDfa dfa

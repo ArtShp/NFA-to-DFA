@@ -3,11 +3,8 @@ module Main where
 import Control.Monad ( forM_ )
 import qualified Data.Set as Set
 
-import Convertions.NFAConvertions
-import Simulators.NFASimulators
-import Simulators.DFASimulators
-
-import qualified TestData.TestData as TD
+import Automata
+import qualified AutomataTestData as TD
 
 main :: IO ()
 main = do

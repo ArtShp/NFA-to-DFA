@@ -6,9 +6,7 @@ import qualified Data.Map as Map
 import Test.HUnit
 import Data.Maybe (isNothing)
 
-import AutomataBase
-import DFA
-import Simulators.DFASimulators
+import Automata
 
 dfaSimulatorsTests :: [Test]
 dfaSimulatorsTests =

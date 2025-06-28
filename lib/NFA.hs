@@ -14,15 +14,15 @@ type NFATransition q a = Map.Map (q, Maybe a) (States q) -- q -> Maybe a -> Stat
 
 -- Assumed to be valid
 data NFA q a = NFA
-    { states       :: States q
-    , alphabet     :: Alphabet a
-    , transition   :: NFATransition q a
-    , initialState :: q
-    , finalStates  :: States q
+    { nfaStates       :: States q
+    , nfaAlphabet     :: Alphabet a
+    , nfaTransition   :: NFATransition q a
+    , nfaInitialState :: q
+    , nfaFinalStates  :: States q
     } deriving (Eq)
 
 instance (Ord q, Ord a, Show q, Show a) => Show (NFA q a) where
-    show NFA{states = qs, alphabet = as, transition = trans, initialState = q0, finalStates = fs} =
+    show NFA{nfaStates = qs, nfaAlphabet = as, nfaTransition = trans, nfaInitialState = q0, nfaFinalStates = fs} =
         "NFA { " ++ "\n" ++
         "    states = " ++ showStates qs ++ "\n" ++
         "    alphabet = " ++ showAlphabet as ++ "\n" ++

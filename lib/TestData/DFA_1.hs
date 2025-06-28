@@ -8,22 +8,22 @@ module TestData.DFA_1 (
 import qualified Data.Set as Set
 import qualified Data.Map as Map
 
-import qualified DFA
+import DFA
 
 -- ==================== BEGIN - DFA 1 ====================
 
-dfa_1 :: DFA.DFA Int Char
-dfa_1 = DFA.DFA
-    { DFA.states       = Set.fromList [0, 1]
-    , DFA.alphabet     = Set.fromList "ab"
-    , DFA.transition   = Map.fromList
+dfa_1 :: DFA Int Char
+dfa_1 = DFA
+    { dfaStates       = Set.fromList [0, 1]
+    , dfaAlphabet     = Set.fromList "ab"
+    , dfaTransition   = Map.fromList
         [ ((0, 'a'), 1)
         , ((1, 'a'), 0)
         , ((1, 'b'), 1)
         , ((0, 'b'), 0)
         ]
-    , DFA.initialState = 0
-    , DFA.finalStates  = Set.singleton 0
+    , dfaInitialState = 0
+    , dfaFinalStates  = Set.singleton 0
     }
 
 

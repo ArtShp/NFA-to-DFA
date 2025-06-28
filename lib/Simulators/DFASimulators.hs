@@ -6,7 +6,7 @@ import qualified Data.Map as Map
 import DFA
 
 dfaSimulateOneStep :: (Ord q, Ord a) => DFA q a -> q -> a -> Maybe q
-dfaSimulateOneStep dfa q a = Map.lookup (q, a) (transition dfa)
+dfaSimulateOneStep dfa q a = Map.lookup (q, a) (dfaTransition dfa)
 
 dfaSimulateFromState :: (Ord q, Ord a) => DFA q a -> q -> [a] -> Maybe q
 dfaSimulateFromState dfa = go
@@ -27,13 +27,13 @@ dfaSimulateFromStateWithHistory dfa q input = go q input []
                 Nothing        -> (reverse ((current, a):history), Nothing)
 
 dfaSimulateFromStart :: (Ord q, Ord a) => DFA q a -> [a] -> Maybe q
-dfaSimulateFromStart dfa = dfaSimulateFromState dfa (initialState dfa)
+dfaSimulateFromStart dfa = dfaSimulateFromState dfa (dfaInitialState dfa)
 
 dfaSimulateFromStartWithHistory :: (Ord q, Ord a) => DFA q a -> [a] -> ([(q, a)], Maybe q)
-dfaSimulateFromStartWithHistory dfa = dfaSimulateFromStateWithHistory dfa (initialState dfa)
+dfaSimulateFromStartWithHistory dfa = dfaSimulateFromStateWithHistory dfa (dfaInitialState dfa)
 
 dfaIsAccepted :: (Ord q, Ord a) => DFA q a -> [a] -> Bool
 dfaIsAccepted dfa input =
     case dfaSimulateFromStart dfa input of
-        Just q  -> q `Set.member` finalStates dfa
+        Just q  -> q `Set.member` dfaFinalStates dfa
         Nothing -> False
