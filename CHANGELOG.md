@@ -25,3 +25,7 @@
 * Introduce some test data
 * Fix bug with DFA history
 * Add show methods for DFA and NFA
+
+## 0.4.0.1 -- 2025-06-28
+
+* Add documentation
