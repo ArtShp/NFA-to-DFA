@@ -14,3 +14,14 @@
 
 * Fix NFA simulators with history output
 * Add DFA and NFA unit tests, that cover simple cases
+
+## 0.4.0.0 -- 2025-06-28
+
+* Change library structure:
+    * Two modules are exposed: `Automata` and `AutomataTestData`
+* Change API for DFA and NFA
+    * Their data getters have distinct names
+* Implement some basic usage of library in Main
+* Introduce some test data
+* Fix bug with DFA history
+* Add show methods for DFA and NFA
