@@ -1,9 +1,9 @@
 module TestData.NFA_2 (
     nfa_2
   , nfaTrans_2
+  , nfaIO_2
   , nfaInputs_2
   , nfaOutputs_2
-  , nfaIO_2
   , dfaExpected_2
   , dfaExpectedTrans_2
 ) where
@@ -41,14 +41,21 @@ nfaTrans_2 = Map.fromList (
 
 
 
+nfaIO_2 :: [(String, Bool)]
+nfaIO_2 =
+    [ ("12.34", True)
+    , ("-1.", True)
+    , ("+.555", True)
+    , (".", False)
+    , ("13249", False)
+    , ("--12.12", False)
+    ]
+
 nfaInputs_2 :: [String]
-nfaInputs_2 = ["12.34", "-1.", "+.555", ".", "13249", "--12.12"]
+nfaInputs_2 = fst $ unzip nfaIO_2
 
 nfaOutputs_2 :: [Bool]
-nfaOutputs_2 = [True, True, True, False, False, False]
-
-nfaIO_2 :: [(String, Bool)]
-nfaIO_2 = zip nfaInputs_2 nfaOutputs_2
+nfaOutputs_2 = snd $ unzip nfaIO_2
 
 
 

@@ -1,9 +1,9 @@
 module TestData.NFA_1 (
     nfa_1
   , nfaTrans_1
+  , nfaIO_1
   , nfaInputs_1
   , nfaOutputs_1
-  , nfaIO_1
   , dfaExpected_1
   , dfaExpectedTrans_1
 ) where
@@ -41,14 +41,19 @@ nfaTrans_1 = Map.fromList
 
 
 
+nfaIO_1 :: [(String, Bool)]
+nfaIO_1 =
+    [ ("", False)
+    , ("a", False)
+    , ("aa", True)
+    , ("aaaa", False)
+    ]
+
 nfaInputs_1 :: [String]
-nfaInputs_1 = ["", "a", "aa", "aaaa"]
+nfaInputs_1 = fst $ unzip nfaIO_1
 
 nfaOutputs_1 :: [Bool]
-nfaOutputs_1 = [False, False, True, False]
-
-nfaIO_1 :: [(String, Bool)]
-nfaIO_1 = zip nfaInputs_1 nfaOutputs_1
+nfaOutputs_1 = snd $ unzip nfaIO_1
 
 
 
