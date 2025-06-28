@@ -49,7 +49,7 @@ main = do
     print dfa
 
     -- Try a few input strings on the DFA
-    let inputsMix = ["", "a", "aa"]
+    let inputsMix = ["", "a", "aa", "aaaa"]
     putStrLn "\n-- Testing DFA acceptance --"
     forM_ inputsMix $ \w -> do
         putStrLn $ "Input: \"" ++ w ++ "\"  =>  " ++
