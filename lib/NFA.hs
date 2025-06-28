@@ -19,7 +19,28 @@ data NFA q a = NFA
     , transition   :: NFATransition q a
     , initialState :: q
     , finalStates  :: States q
-    } deriving (Show, Eq)
+    } deriving (Eq)
+
+instance (Ord q, Ord a, Show q, Show a) => Show (NFA q a) where
+    show NFA{states = qs, alphabet = as, transition = trans, initialState = q0, finalStates = fs} =
+        "NFA { " ++ "\n" ++
+        "    states = " ++ showStates qs ++ "\n" ++
+        "    alphabet = " ++ showAlphabet as ++ "\n" ++
+        "    transition = " ++ showNFATransition trans ++ "\n" ++
+        "    initialState = " ++ show q0 ++ "\n" ++
+        "    finalStates = " ++ showStates fs ++ "\n" ++
+        "}"
+
+showNFATransition :: (Ord q, Ord a, Show q, Show a) => NFATransition q a -> String
+showNFATransition trans =
+    "{" ++ "\n" ++
+    concat [ tab2 ++ showRule (q, a) nextStates ++ "\n"
+                             | ((q, a), nextStates) <- Map.toList trans
+           ] ++ tab ++ "}"
+    where
+        showRule (q, a) next = "(" ++ show q ++ ", " ++ maybe "ε" show a ++ ") -> " ++ showStates next
+        tab = "                 "
+        tab2 = tab ++ "  "
 
 isValidNFA :: (Ord q, Ord a) => NFA q a -> Bool
 isValidNFA (NFA qs as trans q0 fs) =
