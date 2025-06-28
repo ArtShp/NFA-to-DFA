@@ -5,9 +5,7 @@ import qualified Data.Map as Map
 
 import Test.HUnit
 
-import AutomataBase
-import NFA
-import Simulators.NFASimulators
+import Automata
 
 nfaSimulatorsTests :: [Test]
 nfaSimulatorsTests =

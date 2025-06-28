@@ -6,8 +6,7 @@ import qualified Data.Map as Map
 import Test.HUnit
 import Data.Maybe (isJust, isNothing)
 
-import AutomataBase
-import NFA
+import Automata
 
 nfaValidationTests :: [Test]
 nfaValidationTests =
@@ -91,10 +90,10 @@ alphabetC = Set.fromList "ab"
 
 transC :: NFATransition Int Char
 transC = Map.fromList
-    [ ((0, Nothing),   Set.fromList [1, 2])
-    , ((1, Just 'a'),  Set.singleton 1)
-    , ((1, Just 'b'),  Set.singleton 2)
-    , ((2, Just 'a'),  Set.fromList [0, 2])
+    [ ((0, Nothing),  Set.fromList [1, 2])
+    , ((1, Just 'a'), Set.singleton 1)
+    , ((1, Just 'b'), Set.singleton 2)
+    , ((2, Just 'a'), Set.fromList [0, 2])
     ]
 
 initialC :: Int

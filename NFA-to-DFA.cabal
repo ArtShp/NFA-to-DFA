@@ -20,7 +20,7 @@ name:               NFA-to-DFA
 -- PVP summary:     +-+------- breaking API changes
 --                  | | +----- non-breaking API additions
 --                  | | | +--- code changes with no API change
-version:            0.3.0.0
+version:            0.4.0.0
 
 -- A short (one-line) description of the package.
 -- synopsis:
@@ -59,11 +59,13 @@ library
     import:           warnings
 
     -- Modules exported by the library.
-    exposed-modules:  AutomataBase, DFA, NFA, Convertions.NFAConvertions, Convertions.DFAConvertions,
-                      Simulators.DFASimulators, Simulators.NFASimulators
+    exposed-modules:  Automata, AutomataTestData
 
     -- Modules included in this library but not exported.
-    -- other-modules:
+    other-modules: AutomataBase, DFA, NFA, 
+                   Convertions.NFAConvertions, Convertions.DFAConvertions,
+                   Simulators.DFASimulators, Simulators.NFASimulators, 
+                   TestData.TestData, TestData.NFA_1, TestData.NFA_2, TestData.DFA_1
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
@@ -95,6 +97,7 @@ executable NFA-to-DFA
     -- Other library packages from which modules are imported.
     build-depends:
         base ^>=4.17.2.1,
+        containers,
         NFA-to-DFA
 
     -- Directories containing source files.

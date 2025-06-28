@@ -4,7 +4,7 @@ import qualified Data.Map as Map
 import qualified Data.Set as Set
 
 import AutomataBase
-import qualified DFA
+import DFA
 import NFA
 
 epsilonClosure :: (Ord q, Ord a) => NFATransition q a -> States q -> States q
@@ -29,13 +29,13 @@ moveClosure trans q symbol = case symbol of
     Just a  -> epsilonClosure trans (move trans (Set.singleton q) a)
     Nothing -> epsilonClosure trans (Set.singleton q)
 
-nfaToDfa :: (Ord q, Ord a) => NFA q a -> DFA.DFA (States q) a
+nfaToDfa :: (Ord q, Ord a) => NFA q a -> DFA (States q) a
 nfaToDfa nfa = go Set.empty [initState] Map.empty
     where
-        trans = transition nfa
-        as = alphabet nfa
-        fs = finalStates nfa
-        initState = epsilonClosure trans (Set.singleton $ initialState nfa)
+        trans = nfaTransition nfa
+        as = nfaAlphabet nfa
+        fs = nfaFinalStates nfa
+        initState = epsilonClosure trans (Set.singleton $ nfaInitialState nfa)
         
         go visited [] delta = deleteEmptyState $ DFA.DFA visited as delta initState (Set.filter (not . Set.null . Set.intersection fs) visited)
         go visited (q:queue) delta
@@ -49,8 +49,8 @@ nfaToDfa nfa = go Set.empty [initState] Map.empty
                         ) (delta, []) (Set.toList as)
                 in go visited' (queue ++ newStates) delta'
 
-deleteEmptyState :: (Ord q, Ord a) => DFA.DFA (States q) a -> DFA.DFA (States q) a
-deleteEmptyState dfa@DFA.DFA{DFA.states = qs, DFA.alphabet = sigma, DFA.transition = trans, DFA.initialState = q0, DFA.finalStates = fs}
+deleteEmptyState :: (Ord q, Ord a) => DFA (States q) a -> DFA (States q) a
+deleteEmptyState dfa@DFA{dfaStates = qs, dfaAlphabet = sigma, dfaTransition = trans, dfaInitialState = q0, dfaFinalStates = fs}
     | Set.empty `Set.notMember` qs = dfa
-    | otherwise = DFA.DFA (Set.delete Set.empty qs) sigma 
-                                         (Map.filterWithKey (\_ v -> not (Set.null v)) trans) q0 fs
+    | otherwise = DFA (Set.delete Set.empty qs) sigma 
+                      (Map.filterWithKey (\_ v -> not (Set.null v)) trans) q0 fs
