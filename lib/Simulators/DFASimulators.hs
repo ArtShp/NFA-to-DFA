@@ -24,7 +24,7 @@ dfaSimulateFromStateWithHistory dfa q input = go q input []
         go current (a:as) history =
             case dfaSimulateOneStep dfa current a of
                 Just nextState -> go nextState as ((current, a):history)
-                Nothing        -> (reverse history, Nothing)
+                Nothing        -> (reverse ((current, a):history), Nothing)
 
 dfaSimulateFromStart :: (Ord q, Ord a) => DFA q a -> [a] -> Maybe q
 dfaSimulateFromStart dfa = dfaSimulateFromState dfa (initialState dfa)
