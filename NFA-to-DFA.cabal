@@ -60,10 +60,10 @@ library
 
     -- Modules exported by the library.
     exposed-modules:  AutomataBase, DFA, NFA, Convertions.NFAConvertions, Convertions.DFAConvertions,
-                      Simulators.DFASimulators, Simulators.NFASimulators
+                      Simulators.DFASimulators, Simulators.NFASimulators, TestData.TestData
 
     -- Modules included in this library but not exported.
-    -- other-modules:
+    other-modules: TestData.NFA_1, TestData.NFA_2
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
