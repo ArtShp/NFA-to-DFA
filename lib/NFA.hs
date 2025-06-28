@@ -35,7 +35,7 @@ showNFATransition :: (Ord q, Ord a, Show q, Show a) => NFATransition q a -> Stri
 showNFATransition trans =
     "{" ++ "\n" ++
     concat [ tab2 ++ showRule (q, a) nextStates ++ "\n"
-                             | ((q, a), nextStates) <- Map.toList trans
+           | ((q, a), nextStates) <- Map.toList trans
            ] ++ tab ++ "}"
     where
         showRule (q, a) next = "(" ++ show q ++ ", " ++ maybe "ε" show a ++ ") -> " ++ showStates next
